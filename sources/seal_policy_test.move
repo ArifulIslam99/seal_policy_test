@@ -4,7 +4,7 @@ module seal_policy_test::seal_policy_test {
     const EAlreadyWhitelisted: u64 = 1;
     const ENotWhitelisted: u64 = 2;
 
-    const ADMIN: address = @0x2;
+    const ADMIN: address = @0xa1f8a59ba3a9610fb51fdd9e901cc4387310c74d51587d47ad30bb618ecb346d;
 
     public struct WhiteList has key {
         id: UID,
@@ -31,7 +31,11 @@ module seal_policy_test::seal_policy_test {
         );
     }
 
-    public fun add(
+    public entry fun transfer_cap(cap: AdminCap, receiver: address){
+        transfer::transfer(cap, receiver)
+    }
+
+    public entry fun add(
         _cap: &AdminCap,
         white_list: &mut WhiteList,
         new_user: address
@@ -40,7 +44,7 @@ module seal_policy_test::seal_policy_test {
         white_list.addresses.add(new_user, true);
     }
 
-    public fun remove(
+    public entry fun remove(
         _cap: &AdminCap,
         white_list: &mut WhiteList,
         user: address
